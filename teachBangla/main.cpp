@@ -1,11 +1,10 @@
+#include "WindowCreator.h"
 #define _CRT_SECURE_NO_WARNINGS
-# include "iGraphics.h"
-
-
 void iDraw() {
 	iClear();
+	WindowCreator mainWindow(1, 1, myMainWindow);
+	mainWindow.showMyWindow();
 
-	return;
 }
 
 void iMouseMove(int mx, int my) {
@@ -39,7 +38,7 @@ int main()
 {
 //InitializeKnightPosition();
 
-	iInitialize(400, 400, "Blank");
+	iInitialize(800, 800, "Fun and Learn");
 
 	return 0;
 }
