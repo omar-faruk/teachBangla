@@ -1,9 +1,11 @@
 #include "WindowCreator.h"
 #define _CRT_SECURE_NO_WARNINGS
+
 void iDraw() {
 	iClear();
-	WindowCreator mainWindow(1, 1, myMainWindow);
-	mainWindow.showMyWindow();
+	NewWindow mainWindow(1, 1, 1200, 800, myMainWindow);
+	mainWindow.show();
+
 
 }
 
@@ -38,7 +40,6 @@ int main()
 {
 //InitializeKnightPosition();
 
-	iInitialize(800, 800, "Fun and Learn");
-
+	iInitialize(1200,800,"Fun and Learn");
 	return 0;
 }
