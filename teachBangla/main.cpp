@@ -1,9 +1,9 @@
-#include "WindowCreator.h"
+#include "WindowManager.h"
 #define _CRT_SECURE_NO_WARNINGS
+NewWindow mainWindow(1, 1, 1200, 800, myMainWindow);
 
 void iDraw() {
-	iClear();
-	NewWindow mainWindow(1, 1, 1200, 800, myMainWindow);
+	iClear();	
 	mainWindow.show();
 
 
@@ -14,11 +14,13 @@ void iMouseMove(int mx, int my) {
 
 void iMouse(int button, int state, int mx, int my) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-	
+		string s = mainWindow.clickedButton(mx, my);
+
+		if (s == "closeButton"){
+			exit(0);
+		}
 	}
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
 	
-	}
 }
 
 void iKeyboard(unsigned char key) {

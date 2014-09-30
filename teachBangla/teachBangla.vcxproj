@@ -75,7 +75,7 @@
   <ItemGroup>
     <ClInclude Include="files\fileslist.h" />
     <ClInclude Include="headers.h" />
-    <ClInclude Include="WindowCreator.h" />
+    <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

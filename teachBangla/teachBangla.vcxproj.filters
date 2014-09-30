@@ -23,10 +23,10 @@
     <ClInclude Include="headers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowCreator.h">
+    <ClInclude Include="files\fileslist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="files\fileslist.h">
+    <ClInclude Include="WindowManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

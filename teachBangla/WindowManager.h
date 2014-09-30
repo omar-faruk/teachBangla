@@ -23,8 +23,10 @@ public:
 	void show(){
 		iShowBMP(px, py, filename);
 	}
-};
 
+};
+Button closeButton(1200 - 48, 800 - 48, 1200, 800, buttonClose);
+Button nextButton();
 
 class NewWindow
 {
@@ -45,7 +47,13 @@ public:
 	}
 	void show(){
 		iShowBMP(px, py, filename);
-		Button closeButton(1200-48, 800-48, 1200, 800, buttonClose);
 		closeButton.show();
 	}
+
+	string clickedButton(int x, int y){
+		if (x >= closeButton.px && x <= closeButton.ex && y >= closeButton.py && y <= closeButton.ey){
+			return "closeButton";
+		}
+	}
+
 };
