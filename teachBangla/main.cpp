@@ -1,14 +1,12 @@
 #include "WindowManager.h"
 #define _CRT_SECURE_NO_WARNINGS
-NewWindow mainWindow(1, 1, 1200, 800, myMainWindow);
+NewWindow mainWindow(1, 1, 1200, 800, myMainWindow.data());
 
 void iDraw() {
 	iClear();	
 	mainWindow.show();
 
-
 }
-
 void iMouseMove(int mx, int my) {
 }
 
