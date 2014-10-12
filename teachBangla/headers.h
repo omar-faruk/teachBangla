@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <map>
+#include <vector>
 #include <string>
 
 #pragma once

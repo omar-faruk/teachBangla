@@ -73,9 +73,13 @@
     <Image Include="files\main_background.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="files\fileslist.h" />
+    <ClInclude Include="buttons.h" />
     <ClInclude Include="headers.h" />
-    <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="letters.h" />
+    <ClInclude Include="WindowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="letters\letters.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

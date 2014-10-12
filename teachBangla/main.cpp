@@ -1,25 +1,51 @@
-#include "WindowManager.h"
+#include "WindowManager.cpp"
 #define _CRT_SECURE_NO_WARNINGS
-NewWindow mainWindow(1, 1, 1200, 800, myMainWindow.data());
+
+string clickedButton;
+
+NewWindow mainWindow(1, 1, 1300, 700, myMainWindow.data());
+NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
+
+string imageSet1_root = "wordSet1\\";
 
 void iDraw() {
-	iClear();	
-	mainWindow.show();
+	iClear();
+	if (letterType == ""){
+		mainWindow.showMain();
+		learnVowels.show();
+		learnConsonents.show();
+	}
+	if (letterType == "vowel"){	
+		defaultWindow.showDefault();
+		showAllVowels();
+	}
+	else if (letterType == "consonant"){
+		defaultWindow.showDefault();
+		//showAllConsonants();
+	}
+
 
 }
 void iMouseMove(int mx, int my) {
+
 }
 
 void iMouse(int button, int state, int mx, int my) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-		string s = mainWindow.clickedButton(mx, my);
 
-		if (s == "closeButton"){
+		clickedButton = mainWindow.clicked(mx, my);
+		if (clickedButton == "closeButton"){
 			exit(0);
 		}
+		if (clickedButton == "vowels_menu"){
+			letterType = "vowel";
+		}
+		if (clickedButton == "consonant_menu"){
+			letterType = "consonant";
+		}
 	}
-	
 }
+	
 
 void iKeyboard(unsigned char key) {
 
@@ -38,8 +64,27 @@ void iSpecialKeyboard(unsigned char key) {
 
 int main()
 {
-//InitializeKnightPosition();
+	freopen("letters\\vowels.txt", "r", stdin);
+	int i;
+	int startx, starty, endx, endy;
+	string location = "letters\\";
 
-	iInitialize(1200,800,"Fun and Learn");
+	for (i = 1; i < 12; i++){
+		string file;
+		cin >> startx >> starty >> endx >> endy >> file;
+		file = location + file;
+		Letters temp(startx, starty, endx, endy, file.data());
+		vowels.push_back(temp);
+		}
+
+	freopen("letters\\consonants.txt", "r", stdin);
+	for (i = 1; i < 12; i++){
+		string file;
+		cin >> startx >> starty >> endx >> endy >> file;
+		file = location + file;
+		Letters temp(startx, starty, endx, endy, file.data());
+		consonants.push_back(temp);
+	}
+	iInitialize(1300,700,"Learn Bangla with Fun");
 	return 0;
 }
