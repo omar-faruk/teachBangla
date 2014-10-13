@@ -6,7 +6,6 @@
 string myMainWindow = "icons\\main_background.bmp";
 string defaultBackground = "icons\\default.bmp";
 
-
 class NewWindow
 {
 public:
@@ -15,6 +14,7 @@ public:
 	int ex;
 	int ey;
 	char filename[150];
+	char *frame = "icons\\frame.bmp";
 public:
 	NewWindow();
 	NewWindow(int x, int y, int end_x, int end_y, const char *iconfile){
@@ -30,22 +30,12 @@ public:
 	}
 	void showDefault(){
 		iShowBMP(sx, sy, filename);
+		iShowBMP(110, 110, frame);
+		mainMenu.show();
 		closeButton.show();
 		nextButton.show();
 		previousButton.show();
 	}
-	string clicked(int x, int y){
-		
-		
-		if (isButton(x,y)){
-			return clickedButton(x, y);
-		}
-		if (isLetter(x, y)){
-			return clickedLetter(x, y);
-		}
-		return "";
-	}
-
 	string clickedButton(int x, int y){
 		if (x >= closeButton.sx && x <= closeButton.ex && y >= closeButton.sy && y <= closeButton.ey){
 			return "closeButton";
@@ -62,5 +52,9 @@ public:
 		else if (x >= learnConsonents.sx && x <= learnConsonents.ex && y >= learnConsonents.sy && y <= learnConsonents.ey){
 			return "consonant_menu";
 		}
+		else if (x >= mainMenu.sx && x <= mainMenu.ex && y >= mainMenu.sy && y <= mainMenu.ey){
+			return "main_menu";
+		}
+		return "";
 	}
 };

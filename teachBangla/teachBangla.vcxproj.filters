@@ -39,7 +39,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="letters\letters.txt">
+    <Text Include="letters\consonants.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="letters\vowels.txt">
       <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>

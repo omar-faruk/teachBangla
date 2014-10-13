@@ -79,7 +79,8 @@
     <ClInclude Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="letters\letters.txt" />
+    <Text Include="letters\consonants.txt" />
+    <Text Include="letters\vowels.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
