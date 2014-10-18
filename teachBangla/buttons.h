@@ -1,3 +1,5 @@
+#include "headers.h"
+#define _CRT_SECURE_NO_WARNINGS
 class Button
 {
 public:

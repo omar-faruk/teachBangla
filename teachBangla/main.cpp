@@ -10,7 +10,7 @@ bool play = false;
 void show(const char *letter){
 	char file[150];
 	strcpy(file, letter);
-	iShowBMP(120, 120, file);
+	iShowBMP(118, 117, file);
 }
 
 void iDraw() {
@@ -51,19 +51,33 @@ void iMouse(int button, int state, int mx, int my) {
 				exit(0);
 			}
 			if (clickedButton == "vowels_menu"){
-				image = "";
+				setCount = 0;
 				letterType = "vowel";
+				image = "";
 			}
 			if (clickedButton == "consonant_menu"){
+				setCount = 0;
 				letterType = "consonant";
 				image = "";
 			}
 			if (clickedButton == "main_menu"){
+				setCount = 0;
 				letterType = "";
 				image = "";
 			}
+			if (clickedButton == "nextButton"){
+				setCount++;
+				play = false;
+				changeSet();
+			}
+			if (clickedButton == "previousButton"){
+				setCount--;
+				play = false;
+				changeSet();
+			}
 		}
 		if (isLetter(mx, my)){
+			setCount = 0;
 			showClickedLetter(mx, my);
 			play = false;
 		}		

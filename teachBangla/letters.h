@@ -1,11 +1,10 @@
 #include "headers.h"
 #pragma once
 string letterType = "";
-string imageSet = "wordSet1\\";
+string imageSet[] = { "wordSet1\\", "wordSet2\\", "wordSet3\\" };
 string soundFile;
 string image;
-int setCount = 1;
-
+int setCount = 0;
 class Letters
 {
 public:
@@ -57,6 +56,10 @@ bool isLetter(int x, int y){
 	}
 	return false;
 }
+void changeSet(){
+	image[7] = char(setCount+1 + '0');
+	soundFile[7] = char(setCount+1 + '0');
+}
 void showClickedLetter(int x, int y){
 
 	string imageName;
@@ -66,7 +69,7 @@ void showClickedLetter(int x, int y){
 			if ((x >= vowels[i].sx && x <= vowels[i].ex) && (y >= vowels[i].sy && y <= vowels[i].ey)){
 				imageName = vowels[i].filename;
 				imageName.erase(0,8);
-				imageName = imageSet + imageName;
+				imageName = imageSet[setCount] + imageName;
 				soundFile = imageName.substr(0, imageName.size() - 4);
 				soundFile += ".WAV";
 				image = imageName;
@@ -78,11 +81,10 @@ void showClickedLetter(int x, int y){
 			if ((x >= consonants[i].sx && x <= consonants[i].ex) && (y >= consonants[i].sy && y <= consonants[i].ey)){
 				imageName = consonants[i].filename;
 				imageName.erase(0, 8);
-				imageName = imageSet + imageName;
+				imageName = imageSet[setCount] + imageName;
 				soundFile = imageName.substr(0, imageName.size() - 4);
 				soundFile += ".WAV";
 				image = imageName;
-				//return consonants[i].imageFile;
 			}
 		}
 	}
