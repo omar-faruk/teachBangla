@@ -34,14 +34,18 @@ string buttonClose = "icons\\button_close.bmp";
 string vowels_menu = "icons\\vowels.bmp";
 string consonants_menu="icons\\consonant.bmp";
 string main_menu = "icons\\main_menu.bmp";
+string numbers_menu = "icons\\numbers.bmp";
+string quiz_menu = "icons\\quiz.bmp";
 
 Button closeButton(1300 - 64, 700 - 64, 1300, 700, buttonClose.data());
 Button mainMenu(944 ,636,1200,700,main_menu.data());
 Button nextButton(300, 48, 349, 96, buttonNext.data());
 Button previousButton(200, 48, 249, 96, buttonPrevious.data());
-Button learnVowels(400, 400, 656, 464, vowels_menu.data());
-Button learnConsonents(400,300,656,364,consonants_menu.data());
 
+Button learnVowels(400, 450, 656, 514, vowels_menu.data());
+Button learnConsonents(400,350,656,414,consonants_menu.data());
+Button learnNumbers(400,250,656,314,numbers_menu.data());
+Button quiz(400,150,656,214,quiz_menu.data());
 
 bool isButton(int x, int y){
 
@@ -60,7 +64,13 @@ bool isButton(int x, int y){
 	else if (x >= learnConsonents.sx && x <= learnConsonents.ex && y >= learnConsonents.sy && y <= learnConsonents.ey){
 		return true;
 	}
+	else if (x >= learnNumbers.sx && x <= learnNumbers.ex && y >= learnNumbers.sy && y <= learnNumbers.ey){
+		return true;
+	}
 	else if (x >= mainMenu.sx && x <= mainMenu.ex && y >= mainMenu.sy && y <= mainMenu.ey){
+		return true;
+	}
+	else if (x >= quiz.sx && x <= quiz.ex && y >= quiz.sy && y <= quiz.ey){
 		return true;
 	}
 	return false;

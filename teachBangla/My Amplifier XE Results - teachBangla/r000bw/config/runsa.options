@@ -1,0 +1,14 @@
+-r
+E:\programming\GL projects\teachBangla\teachBangla\My Amplifier XE Results - teachBangla\r000bw
+--itt-config=frame
+--data-limit-mb=500
+--event-config=MEM_LOAD_UOPS_LLC_MISS_RETIRED.LOCAL_DRAM:,CPU_CLK_UNHALTED.THREAD:,CPU_CLK_UNHALTED.REF_TSC:,INST_RETIRED.ANY:,UNC_IMC_GT_REQUESTS,UNC_IMC_IA_REQUESTS,UNC_IMC_IO_REQUESTS,UNC_IMC_DATA_READS,UNC_IMC_DATA_WRITES
+--sample-after-multiplier=1.0
+--event-mux
+--mrte-mode=auto
+--search-dir
+sym=E:\programming\GL projects\teachBangla\Debug
+--search-dir
+sym=E:\programming\GL projects\teachBangla
+--
+E:\programming\GL projects\teachBangla\Debug\teachBangla.exe

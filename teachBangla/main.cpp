@@ -4,29 +4,50 @@
 string clickedButton;
 NewWindow mainWindow(1, 1, 1300, 700, myMainWindow.data());
 NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
+NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
 
 bool play = false;
+bool startQuiz = false;
 
 void show(const char *letter){
 	char file[150];
 	strcpy(file, letter);
 	iShowBMP(118, 117, file);
 }
+void showQuiz(const char *letter){
+	char file[150];
+	strcpy(file, letter);
+	iShowBMP(801, 111, file);
+}
 
 void iDraw() {
 	iClear();
+
 	if (letterType == ""){
-		mainWindow.showMain();
-		learnVowels.show();
-		learnConsonents.show();
+	
+		if (startQuiz==true){
+			quizWindow.show();
+		}
+
+	 else{
+			mainWindow.showMain();
+			learnVowels.show();
+			learnConsonents.show();
+			learnNumbers.show();
+			quiz.show();
+		}
 	}
-	if (letterType == "vowel"){	
+	else if (letterType == "vowel"){	
 		defaultWindow.showDefault();
 		showAllVowels();
 	}
 	else if (letterType == "consonant"){
 		defaultWindow.showDefault();
 		showAllConsonants();
+	}
+	else if (letterType == "numbers"){
+		defaultWindow.showDefault();
+		showAllNumbers();
 	}
 	if (image != ""){
 		show(image.data());
@@ -60,15 +81,34 @@ void iMouse(int button, int state, int mx, int my) {
 				letterType = "consonant";
 				image = "";
 			}
+			if (clickedButton == "numbers_menu"){
+				setCount = 0;
+				letterType = "numbers";
+				image = "";
+			}
 			if (clickedButton == "main_menu"){
 				setCount = 0;
+				startQuiz = false;
 				letterType = "";
 				image = "";
 			}
+			if (clickedButton == "quiz_menu"){
+				setCount = 0;
+				letterType = "";
+				image = "";
+				startQuiz = true;
+				generateQuiz();
+			}
 			if (clickedButton == "nextButton"){
-				setCount++;
-				play = false;
-				changeSet();
+				if (startQuiz==true){
+					generateQuiz();
+
+				}
+				else{
+					setCount++;
+					play = false;
+					changeSet();
+				}
 			}
 			if (clickedButton == "previousButton"){
 				setCount--;
@@ -120,6 +160,15 @@ int main()
 		file = location + file;
 		Letters temp(startx, starty, endx, endy, file.data());
 		consonants.push_back(temp);
+	}
+
+	freopen("letters\\numbers.txt", "r", stdin);
+	for (i = 1; i <= 9; i++){
+		string file;
+		cin >> startx >> starty >> endx >> endy >> file;
+		file = location + file;
+		Letters temp(startx, starty, endx, endy, file.data());
+		numbers.push_back(temp);
 	}
 	iInitialize(1300,700,"Learn Bangla with Fun");
 
