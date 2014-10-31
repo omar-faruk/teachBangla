@@ -7,7 +7,7 @@ NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
 NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
 
 bool play = false;
-bool startQuiz=false;
+bool startQuiz = false;
 
 void show(const char *letter){
 	char file[150];
@@ -19,13 +19,13 @@ void iDraw() {
 	iClear();
 
 	if (letterType == ""){
-	
-		if (startQuiz==true){
+
+		if (startQuiz == true){
 			quizWindow.showQuizWindow();
 			showQuiz(selected_quiz);
 		}
 
-	 else{
+		else{
 			mainWindow.showMain();
 			learnVowels.show();
 			learnConsonents.show();
@@ -33,7 +33,7 @@ void iDraw() {
 			quiz.show();
 		}
 	}
-	else if (letterType == "vowel"){	
+	else if (letterType == "vowel"){
 		defaultWindow.showDefault();
 		showAllVowels();
 	}
@@ -49,7 +49,7 @@ void iDraw() {
 		show(image.data());
 		if (play == false){
 			play = true;
-			PlaySound(soundFile.data() , NULL, SND_FILENAME | SND_ASYNC);
+			PlaySound(soundFile.data(), NULL, SND_FILENAME | SND_ASYNC);
 		}
 	}
 }
@@ -68,7 +68,7 @@ void iMouse(int button, int state, int mx, int my) {
 				image = "";
 				exit(0);
 			}
-			else if (clickedButton == "vowels_menu" &&!startQuiz && letterType==""){
+			else if (clickedButton == "vowels_menu" &&!startQuiz && letterType == ""){
 				setCount = 0;
 				letterType = "vowel";
 				image = "";
@@ -97,10 +97,10 @@ void iMouse(int button, int state, int mx, int my) {
 				generateQuiz();
 			}
 			else if (clickedButton == "nextButton"){
-				if (startQuiz==true){
+				if (startQuiz == true){
 					generateQuiz();
 				}
-				else if(letterType=="numbers" || letterType=="vowels" || letterType=="consonants"){
+				else if (letterType == "numbers" || letterType == "vowels" || letterType == "consonants"){
 					setCount++;
 					play = false;
 					changeSet();
@@ -112,12 +112,12 @@ void iMouse(int button, int state, int mx, int my) {
 				changeSet();
 			}
 		}
-		if(isLetter(mx, my) && !startQuiz){
+		if (isLetter(mx, my) && !startQuiz){
 			setCount = 0;
 			showClickedLetter(mx, my);
 			play = false;
 		}
-		if (!isButton(mx,my) && startQuiz==true){
+		if ((isQuizButton(mx,my))){
 			clickedQuizOption(mx, my);
 		}
 	}
@@ -144,16 +144,16 @@ int main()
 	int startx, starty, endx, endy;
 	string location = "letters\\";
 
-	for (i = 1; i <=11; i++){
+	for (i = 1; i <= 11; i++){
 		string file;
 		cin >> startx >> starty >> endx >> endy >> file;
 		file = location + file;
 		Letters temp(startx, starty, endx, endy, file.data());
 		vowels.push_back(temp);
-		}
+	}
 
 	freopen("letters\\consonants.txt", "r", stdin);
-	for (i = 1; i <=39; i++){
+	for (i = 1; i <= 39; i++){
 		string file;
 		cin >> startx >> starty >> endx >> endy >> file;
 		file = location + file;
@@ -161,7 +161,7 @@ int main()
 		consonants.push_back(temp);
 	}
 	freopen("quiz\\quiz.txt", "r", stdin);
-	for (i = 1; i <=50; i++){
+	for (i = 1; i <= 50; i++){
 		char file[100];
 		scanf("%s", quizLetters[i]);
 	}
@@ -174,7 +174,7 @@ int main()
 		numbers.push_back(temp);
 	}
 	clickedButton = "main_menu";
-	iInitialize(1300,700,"Learn Bangla with Fun");
+	iInitialize(1300, 700, "Learn Bangla with Fun");
 
 	return 0;
 }

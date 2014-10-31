@@ -75,3 +75,18 @@ bool isButton(int x, int y){
 	}
 	return false;
 }
+bool isQuizButton(int mx, int my){
+	if ((mx >= 128 && mx <= 192) && (my >= 120 && my <= 184)){
+		return true;
+	}
+	else if ((mx >= 200 && mx <= 264) && (my >= 120 && my <= 184)){
+		return true;
+	}
+	else if ((mx >= 272 && mx <= 336) && (my >= 120 && my <= 184)){
+		return true;
+	}
+	else if ((mx >= 344 && mx <= 408) && (my >= 120 && my <= 184)){
+		return true;
+	}
+	return false;
+}

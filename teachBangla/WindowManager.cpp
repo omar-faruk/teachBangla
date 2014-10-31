@@ -162,10 +162,13 @@ bool isCorrect(int mx, int my){
 
 void  clickedQuizOption(int mx, int my){
 	if (isCorrect(mx, my)){
-		iDelay(1);
+		PlaySound("quiz\\right.wav", NULL, SND_FILENAME | SND_ASYNC);
+		iDelay(2);
 		generateQuiz();
 	}
-	else showQuiz(selected_quiz);
-	cout << mx << " " << my << endl;
+
+	else {
+		PlaySound("error", NULL, SND_FILENAME | SND_ASYNC);
+	}
 	return;
 }
