@@ -7,17 +7,12 @@ NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
 NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
 
 bool play = false;
-bool startQuiz = false;
+bool startQuiz=false;
 
 void show(const char *letter){
 	char file[150];
 	strcpy(file, letter);
 	iShowBMP(118, 117, file);
-}
-void showQuiz(const char *letter){
-	char file[150];
-	strcpy(file, letter);
-	iShowBMP(801, 111, file);
 }
 
 void iDraw() {
@@ -26,7 +21,8 @@ void iDraw() {
 	if (letterType == ""){
 	
 		if (startQuiz==true){
-			quizWindow.show();
+			quizWindow.showQuizWindow();
+			showQuiz(selected_quiz);
 		}
 
 	 else{
@@ -63,6 +59,7 @@ void iMouseMove(int mx, int my) {
 }
 
 void iMouse(int button, int state, int mx, int my) {
+
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 
 		if (isButton(mx, my)){
@@ -71,56 +68,58 @@ void iMouse(int button, int state, int mx, int my) {
 				image = "";
 				exit(0);
 			}
-			if (clickedButton == "vowels_menu"){
+			else if (clickedButton == "vowels_menu" &&!startQuiz && letterType==""){
 				setCount = 0;
 				letterType = "vowel";
 				image = "";
 			}
-			if (clickedButton == "consonant_menu"){
+			else if (clickedButton == "consonant_menu" && !startQuiz && letterType == ""){
 				setCount = 0;
 				letterType = "consonant";
 				image = "";
 			}
-			if (clickedButton == "numbers_menu"){
+			else if (clickedButton == "numbers_menu" && !startQuiz && letterType == ""){
 				setCount = 0;
 				letterType = "numbers";
 				image = "";
 			}
-			if (clickedButton == "main_menu"){
+			else if (clickedButton == "main_menu"){
 				setCount = 0;
 				startQuiz = false;
 				letterType = "";
 				image = "";
 			}
-			if (clickedButton == "quiz_menu"){
+			else if (clickedButton == "quiz_menu" && letterType == "" && !startQuiz){
 				setCount = 0;
 				letterType = "";
 				image = "";
 				startQuiz = true;
 				generateQuiz();
 			}
-			if (clickedButton == "nextButton"){
+			else if (clickedButton == "nextButton"){
 				if (startQuiz==true){
 					generateQuiz();
-
 				}
-				else{
+				else if(letterType=="numbers" || letterType=="vowels" || letterType=="consonants"){
 					setCount++;
 					play = false;
 					changeSet();
 				}
 			}
-			if (clickedButton == "previousButton"){
+			else if (clickedButton == "previousButton" && !startQuiz){
 				setCount--;
 				play = false;
 				changeSet();
 			}
 		}
-		if (isLetter(mx, my)){
+		if(isLetter(mx, my) && !startQuiz){
 			setCount = 0;
 			showClickedLetter(mx, my);
 			play = false;
-		}		
+		}
+		if (!isButton(mx,my) && startQuiz==true){
+			clickedQuizOption(mx, my);
+		}
 	}
 }
 
@@ -161,7 +160,11 @@ int main()
 		Letters temp(startx, starty, endx, endy, file.data());
 		consonants.push_back(temp);
 	}
-
+	freopen("quiz\\quiz.txt", "r", stdin);
+	for (i = 1; i <=50; i++){
+		char file[100];
+		scanf("%s", quizLetters[i]);
+	}
 	freopen("letters\\numbers.txt", "r", stdin);
 	for (i = 1; i <= 9; i++){
 		string file;
@@ -170,6 +173,7 @@ int main()
 		Letters temp(startx, starty, endx, endy, file.data());
 		numbers.push_back(temp);
 	}
+	clickedButton = "main_menu";
 	iInitialize(1300,700,"Learn Bangla with Fun");
 
 	return 0;

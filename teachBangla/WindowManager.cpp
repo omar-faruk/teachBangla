@@ -38,7 +38,7 @@ public:
 		previousButton.show();
 	}
 
-	void show(){
+	void showQuizWindow(){
 		iShowBMP(0, 0, filename);
 		iShowBMP(800, 110, frame);
 		closeButton.show();
@@ -75,24 +75,97 @@ public:
 	}
 };
 
+static int quiz_ans;
+static char quizLetters[55][100], selected_quiz[200];
+static int mod = 50;
+static int quiz_options[5], used[150];
+
+void showQuizOptions(){
+	//puts(quizLetters[quiz_options[1]]);
+	//puts(quizLetters[quiz_options[2]]);
+	//puts(quizLetters[quiz_options[3]]);
+	//puts(quizLetters[quiz_options[4]]);
+	//puts("\n");
+
+	iShowBMP(128, 120, quizLetters[quiz_options[1]]);
+	iShowBMP(200, 120, quizLetters[quiz_options[2]]);
+	iShowBMP(272, 120, quizLetters[quiz_options[3]]);
+	iShowBMP(344, 120, quizLetters[quiz_options[4]]);
+}
+
 void generateQuiz(){
-	int n = 50,i;
-	int quiz_options[5],used[150],value;
-	
+
+	int value,j=5,i = 1;
+	quiz_ans=rand()%4;
+	if (quiz_ans == 0){
+		quiz_ans = 4;
+	}
 	memset(used, 0, sizeof used);
-	
-	i = 1;
-	value = rand() % n;
+	value = rand() % mod;
+	if (value == 0){
+		value = 50;
+	}
 	used[value]++;
-	quiz_options[0] = value;
+	quiz_options[quiz_ans] = value;
+	
 	while (i <= 4)
 	{
-		while (used[value] != 0){
-			value = rand() % n;
+		if (i != quiz_ans){
+			while (used[value] != 0 && value != 0){
+				value = rand() % mod;
+				if(value == 0){
+					value = 50;
+				}
+			}
+			quiz_options[i] = value;
+			used[value]++;
 		}
-		quiz_options[i++] = value;
-		used[value]++;
+		i++;
 	}
-	cout << quiz_options[0] << " " << quiz_options[1] << " " << quiz_options[2] << " " << quiz_options[3] << "\n";
 
+	strcpy(selected_quiz, "wordSet1\\");
+	for (i = 9;; i++)
+	{
+		if (j == strlen(quizLetters[quiz_options[quiz_ans]])){
+			break;
+		}
+		selected_quiz[i] = quizLetters[quiz_options[quiz_ans]][j++];
+	}
+	selected_quiz[i] = '\0';
+	return;
+}
+
+void showQuiz( char *image){
+	iShowBMP(808, 118, image);
+	showQuizOptions();
+}
+
+bool isCorrect(int mx, int my){
+	int clickedOption;
+	if ((mx >= 128 && mx <= 192) && (my >= 120 && my <= 184)){
+		clickedOption=1;
+	}
+	else if ((mx >= 200 && mx <= 264) && (my >= 120 && my <= 184)){
+		clickedOption=2;
+	}
+	else if ((mx >= 272 && mx <= 336) && (my >= 120 && my <= 184)){
+		clickedOption=3;
+	}
+	else if ((mx >= 344 && mx <= 408) && (my >= 120 && my <= 184)){
+		clickedOption=4;
+	}
+	if (clickedOption == quiz_ans){
+		return true;
+	}
+	else return false;
+}
+
+void  clickedQuizOption(int mx, int my){
+	if (isCorrect(mx, my)){
+		iDelay(1);
+		generateQuiz();
+	}
+	else showQuiz(selected_quiz);
+	cout << mx << " " << my << endl;
+	return;
 }

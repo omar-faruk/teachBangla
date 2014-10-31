@@ -42,6 +42,9 @@
     <Text Include="letters\consonants.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="quiz\quiz.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
     <Text Include="letters\vowels.txt">
       <Filter>Resource Files</Filter>
     </Text>

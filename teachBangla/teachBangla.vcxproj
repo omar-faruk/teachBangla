@@ -81,6 +81,7 @@
   <ItemGroup>
     <Text Include="letters\consonants.txt" />
     <Text Include="letters\vowels.txt" />
+    <Text Include="quiz\quiz.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
