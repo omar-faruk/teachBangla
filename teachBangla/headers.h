@@ -8,8 +8,6 @@
 #include <vector>
 #include <string>
 #include <time.h>
-#include <cstdlib>
-#include <cstring>
 #include <windows.h>
 #include <mmsystem.h>
 

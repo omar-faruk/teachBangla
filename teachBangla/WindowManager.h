@@ -79,13 +79,10 @@ static int quiz_ans;
 static char quizLetters[55][100], selected_quiz[200];
 static int mod = 50;
 static int quiz_options[5], used[150];
-
+bool startQuiz = false;
 void showQuizOptions(){
-	//puts(quizLetters[quiz_options[1]]);
-	//puts(quizLetters[quiz_options[2]]);
-	//puts(quizLetters[quiz_options[3]]);
-	//puts(quizLetters[quiz_options[4]]);
-	//puts("\n");
+
+	char quiz_set[5][100];
 
 	iShowBMP(128, 120, quizLetters[quiz_options[1]]);
 	iShowBMP(200, 120, quizLetters[quiz_options[2]]);
@@ -95,8 +92,8 @@ void showQuizOptions(){
 
 void generateQuiz(){
 
-	int value,j=5,i = 1;
-	quiz_ans=rand()%4;
+	int value, j = 5, i = 1;
+	quiz_ans = rand() % 4;
 	if (quiz_ans == 0){
 		quiz_ans = 4;
 	}
@@ -107,13 +104,13 @@ void generateQuiz(){
 	}
 	used[value]++;
 	quiz_options[quiz_ans] = value;
-	
+
 	while (i <= 4)
 	{
 		if (i != quiz_ans){
 			while (used[value] != 0 && value != 0){
 				value = rand() % mod;
-				if(value == 0){
+				if (value == 0){
 					value = 50;
 				}
 			}
@@ -123,19 +120,14 @@ void generateQuiz(){
 		i++;
 	}
 
-	strcpy(selected_quiz, "wordSet1\\");
-	for (i = 9;; i++)
-	{
-		if (j == strlen(quizLetters[quiz_options[quiz_ans]])){
-			break;
-		}
-		selected_quiz[i] = quizLetters[quiz_options[quiz_ans]][j++];
-	}
-	selected_quiz[i] = '\0';
+	cout << quiz_options[quiz_ans] << endl;
+	strcpy(selected_quiz, word[quiz_options[quiz_ans]][0].c_str());
+	puts(selected_quiz);
+
 	return;
 }
 
-void showQuiz( char *image){
+void showQuiz(char *image){
 	iShowBMP(808, 118, image);
 	showQuizOptions();
 }
@@ -143,16 +135,16 @@ void showQuiz( char *image){
 bool isCorrect(int mx, int my){
 	int clickedOption;
 	if ((mx >= 128 && mx <= 192) && (my >= 120 && my <= 184)){
-		clickedOption=1;
+		clickedOption = 1;
 	}
 	else if ((mx >= 200 && mx <= 264) && (my >= 120 && my <= 184)){
-		clickedOption=2;
+		clickedOption = 2;
 	}
 	else if ((mx >= 272 && mx <= 336) && (my >= 120 && my <= 184)){
-		clickedOption=3;
+		clickedOption = 3;
 	}
 	else if ((mx >= 344 && mx <= 408) && (my >= 120 && my <= 184)){
-		clickedOption=4;
+		clickedOption = 4;
 	}
 	if (clickedOption == quiz_ans){
 		return true;

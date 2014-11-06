@@ -1,5 +1,6 @@
 #include "headers.h"
 #define _CRT_SECURE_NO_WARNINGS
+string clickedButton;
 class Button
 {
 public:
@@ -32,20 +33,20 @@ string buttonPrevious = "icons\\button_previous.bmp";
 string buttonNext = "icons\\button_next.bmp";
 string buttonClose = "icons\\button_close.bmp";
 string vowels_menu = "icons\\vowels.bmp";
-string consonants_menu="icons\\consonant.bmp";
+string consonants_menu = "icons\\consonant.bmp";
 string main_menu = "icons\\main_menu.bmp";
 string numbers_menu = "icons\\numbers.bmp";
 string quiz_menu = "icons\\quiz.bmp";
 
 Button closeButton(1300 - 64, 700 - 64, 1300, 700, buttonClose.data());
-Button mainMenu(944 ,636,1200,700,main_menu.data());
+Button mainMenu(944, 636, 1200, 700, main_menu.data());
 Button nextButton(300, 48, 349, 96, buttonNext.data());
 Button previousButton(200, 48, 249, 96, buttonPrevious.data());
 
 Button learnVowels(400, 450, 656, 514, vowels_menu.data());
-Button learnConsonents(400,350,656,414,consonants_menu.data());
-Button learnNumbers(400,250,656,314,numbers_menu.data());
-Button quiz(400,150,656,214,quiz_menu.data());
+Button learnConsonents(400, 350, 656, 414, consonants_menu.data());
+Button learnNumbers(400, 250, 656, 314, numbers_menu.data());
+Button quiz(400, 150, 656, 214, quiz_menu.data());
 
 bool isButton(int x, int y){
 

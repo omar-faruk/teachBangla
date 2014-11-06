@@ -1,13 +1,11 @@
-#include "WindowManager.cpp"
+#include "WindowManager.h"
 #define _CRT_SECURE_NO_WARNINGS
 
-string clickedButton;
+
 NewWindow mainWindow(1, 1, 1300, 700, myMainWindow.data());
 NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
 NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
 
-bool play = false;
-bool startQuiz = false;
 
 void show(const char *letter){
 	char file[150];
@@ -97,14 +95,15 @@ void iMouse(int button, int state, int mx, int my) {
 				generateQuiz();
 			}
 			else if (clickedButton == "nextButton"){
-				if (startQuiz == true){
-					generateQuiz();
-				}
-				else if (letterType == "numbers" || letterType == "vowels" || letterType == "consonants"){
+			if(!startQuiz){
 					setCount++;
 					play = false;
 					changeSet();
 				}
+				if (startQuiz == true){
+					generateQuiz();
+				}
+				
 			}
 			else if (clickedButton == "previousButton" && !startQuiz){
 				setCount--;
@@ -113,11 +112,15 @@ void iMouse(int button, int state, int mx, int my) {
 			}
 		}
 		if (isLetter(mx, my) && !startQuiz){
-			setCount = 0;
-			showClickedLetter(mx, my);
+			selectedLetter=ClickedLetter(mx, my);
+			image = word[selectedLetter][setCount];
+			soundFile = word[selectedLetter][setCount];
+			soundFile[soundFile.size() - 1] = 'v';
+			soundFile[soundFile.size() - 2] = 'a';
+			soundFile[soundFile.size() - 3] = 'w';
 			play = false;
 		}
-		if ((isQuizButton(mx,my))){
+		if ((isQuizButton(mx, my))){
 			clickedQuizOption(mx, my);
 		}
 	}
@@ -137,13 +140,48 @@ void iSpecialKeyboard(unsigned char key) {
 		exit(0);
 	}
 }
+
+void getAllFiles(char *name,int i)
+{
+	char search[200]="wordSet\\";
+	string fileName;
+	strcat(search, name);
+	strcat(search, "_*");
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(search, &fd);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do{
+			// read all (real) files in current folder
+			// , delete '!' read other 2 default folder . and ..
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
+				fileName = fd.cFileName;
+				if (fileName[fileName.size()-1]=='p'){
+					string bmpFile = "wordSet\\";
+					bmpFile +=fileName;
+					word[i].push_back(bmpFile);
+				}
+			}
+
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+	return ;
+}
+
 int main()
 {
-	freopen("letters\\vowels.txt", "r", stdin);
-	int i;
-	int startx, starty, endx, endy;
+	int i,startx, starty, endx, endy;
 	string location = "letters\\";
+	char key[1000];
+	setCount = 0;
+	for (i = 1; i <= 60; i++){
+		_itoa(i, key, 10);
+		getAllFiles(key,i);
+	}
 
+	freopen("letters\\vowels.txt", "r", stdin);
+	
 	for (i = 1; i <= 11; i++){
 		string file;
 		cin >> startx >> starty >> endx >> endy >> file;
@@ -162,7 +200,6 @@ int main()
 	}
 	freopen("quiz\\quiz.txt", "r", stdin);
 	for (i = 1; i <= 50; i++){
-		char file[100];
 		scanf("%s", quizLetters[i]);
 	}
 	freopen("letters\\numbers.txt", "r", stdin);

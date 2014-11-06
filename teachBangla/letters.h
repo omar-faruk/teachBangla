@@ -1,10 +1,13 @@
-#include "headers.h"
 #pragma once
+#include "headers.h"
 string letterType = "";
 string imageSet[] = { "wordSet1\\", "wordSet2\\", "wordSet3\\" };
 string soundFile;
 string image;
-int setCount = 0;
+int setCount = 0,selectedLetter;
+vector<string>word[100];
+bool play = false;
+
 
 class Letters
 {
@@ -34,7 +37,7 @@ public:
 		iShowBMP(sx, sy, filename);
 	}
 };
-vector<Letters> vowels, consonants,numbers;
+vector<Letters> vowels, consonants, numbers;
 
 bool isLetter(int x, int y){
 	if (letterType == "vowel"){
@@ -68,18 +71,28 @@ bool isLetter(int x, int y){
 }
 
 void changeSet(){
-	image[7] = char(setCount+1 + '0');
-	soundFile[7] = char(setCount+1 + '0');
+
+	if (setCount >= word[selectedLetter].size()){
+		setCount = 0;
+	}
+
+	image = word[selectedLetter][setCount];
+	
+	cout <<"After setChange="<< image << endl;
+	soundFile = word[selectedLetter][setCount];
+	soundFile[soundFile.size() - 1] = 'v';
+	soundFile[soundFile.size() - 2] = 'a';
+	soundFile[soundFile.size() - 3] = 'w';
 }
 
-void showClickedLetter(int x, int y){
+/*void showClickedLetter(int x, int y){
 	string imageName;
 	if (letterType == "vowel"){
 		int n = vowels.size();
-		for (int i = 0; i <n ; i++){
+		for (int i = 0; i <n; i++){
 			if ((x >= vowels[i].sx && x <= vowels[i].ex) && (y >= vowels[i].sy && y <= vowels[i].ey)){
 				imageName = vowels[i].filename;
-				imageName.erase(0,8);
+				imageName.erase(0, 8);
 				imageName = imageSet[setCount] + imageName;
 				soundFile = imageName.substr(0, imageName.size() - 4);
 				soundFile += ".WAV";
@@ -87,7 +100,7 @@ void showClickedLetter(int x, int y){
 			}
 		}
 	}
-	else if(letterType=="consonant"){
+	else if (letterType == "consonant"){
 		for (int i = 0; i < consonants.size(); i++){
 			if ((x >= consonants[i].sx && x <= consonants[i].ex) && (y >= consonants[i].sy && y <= consonants[i].ey)){
 				imageName = consonants[i].filename;
@@ -111,24 +124,49 @@ void showClickedLetter(int x, int y){
 			}
 		}
 	}
-	return ;
+	return;
+}*/
+int ClickedLetter(int x, int y){
+	if (letterType == "vowel"){
+		int n = vowels.size();
+		for (int i = 0; i <n; i++){
+			if ((x >= vowels[i].sx && x <= vowels[i].ex) && (y >= vowels[i].sy && y <= vowels[i].ey)){
+				return i+1;
+			}
+		}
+	}
+	else if (letterType == "consonant"){
+		for (int i = 0; i < int(consonants.size()); i++){
+			if ((x >= consonants[i].sx && x <= consonants[i].ex) && (y >= consonants[i].sy && y <= consonants[i].ey)){
+				return 11 + i+1;
+			}
+		}
+	}
+	else if (letterType == "numbers"){
+		for (int i = 0; i < int(numbers.size()); i++){
+			if ((x >= numbers[i].sx && x <= numbers[i].ex) && (y >= numbers[i].sy && y <= numbers[i].ey)){
+				return 50 + i+1;
+			}
+		}
+	}
+	return -1;
 }
 
 void showAllVowels(){
 	int i;
-	for (i = 0; i < vowels.size(); i++){
+	for (i = 0; i < int(vowels.size()); i++){
 		vowels[i].showLetter();
 	}
 }
 void showAllConsonants(){
 	int i;
-	for (i = 0; i < consonants.size(); i++){
+	for (i = 0; i < int(consonants.size()); i++){
 		consonants[i].showLetter();
 	}
 }
 void showAllNumbers(){
 	int i;
-	for (i = 0; i < numbers.size(); i++){
+	for (i = 0; i < int(numbers.size()); i++){
 		numbers[i].showLetter();
 	}
 }

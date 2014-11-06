@@ -23,14 +23,14 @@
     <ClInclude Include="headers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="WindowManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="letters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="buttons.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,9 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="letters\consonants.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="quiz\quiz.txt">
       <Filter>Resource Files</Filter>
     </Text>
     <Text Include="letters\vowels.txt">
