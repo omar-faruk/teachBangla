@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buttons.h" />
+    <ClInclude Include="iGraphics.h" />
     <ClInclude Include="headers.h" />
     <ClInclude Include="letters.h" />
     <ClInclude Include="WindowManager.h" />

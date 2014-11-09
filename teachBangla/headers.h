@@ -1,4 +1,3 @@
-#include <iGraphics.h>
 #include <iostream>
 #include <cstdlib>
 #include <cstring>

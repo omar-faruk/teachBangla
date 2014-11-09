@@ -1,19 +1,15 @@
 #include "WindowManager.h"
 #define _CRT_SECURE_NO_WARNINGS
 
-
-NewWindow mainWindow(1, 1, 1300, 700, myMainWindow.data());
-NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
-NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
-
+bool play = false;
 
 void show(const char *letter){
 	char file[150];
 	strcpy(file, letter);
-	iShowBMP(118, 117, file);
+	Graphics::iShowBMP(118, 117, file);
 }
 
-void iDraw() {
+void Graphics::iDraw() {
 	iClear();
 
 	if (letterType == ""){
@@ -52,11 +48,11 @@ void iDraw() {
 	}
 }
 
-void iMouseMove(int mx, int my) {
+void Graphics::iMouseMove(int mx, int my) {
 
 }
 
-void iMouse(int button, int state, int mx, int my) {
+void Graphics::iMouse(int button, int state, int mx, int my) {
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
 
@@ -126,7 +122,7 @@ void iMouse(int button, int state, int mx, int my) {
 	}
 }
 
-void iKeyboard(unsigned char key) {
+void Graphics::iKeyboard(unsigned char key) {
 
 	if (key == 'q') {
 		exit(0);
@@ -134,7 +130,7 @@ void iKeyboard(unsigned char key) {
 	return;
 }
 
-void iSpecialKeyboard(unsigned char key) {
+void Graphics::iSpecialKeyboard(unsigned char key) {
 
 	if (key == GLUT_KEY_END) {
 		exit(0);
@@ -152,8 +148,6 @@ void getAllFiles(char *name,int i)
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
 		do{
-			// read all (real) files in current folder
-			// , delete '!' read other 2 default folder . and ..
 			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)){
 				fileName = fd.cFileName;
 				if (fileName[fileName.size()-1]=='p'){
@@ -211,7 +205,7 @@ int main()
 		numbers.push_back(temp);
 	}
 	clickedButton = "main_menu";
-	iInitialize(1300, 700, "Learn Bangla with Fun");
+	Graphics::iInitialize(1300, 700, "Learn Bangla with Fun");
 
 	return 0;
 }
