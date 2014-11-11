@@ -118,6 +118,7 @@ void showAllVowels(){
 void showAllConsonants(){
 	int i;
 	for (i = 0; i < int(consonants.size()); i++){
+		puts(consonants[i].filename);
 		consonants[i].showLetter();
 	}
 }

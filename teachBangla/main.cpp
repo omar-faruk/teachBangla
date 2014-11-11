@@ -13,19 +13,11 @@ void Graphics::iDraw() {
 	iClear();
 
 	if (letterType == ""){
-
-		if (startQuiz == true){
-			quizWindow.showQuizWindow();
-			showQuiz(selected_quiz);
-		}
-
-		else{
-			mainWindow.showMain();
-			learnVowels.show();
-			learnConsonents.show();
-			learnNumbers.show();
-			quiz.show();
-		}
+		mainWindow.showMain();
+		learnVowels.show();
+		learnConsonents.show();
+		learnNumbers.show();
+		quiz.show();
 	}
 	else if (letterType == "vowel"){
 		defaultWindow.showDefault();
@@ -38,6 +30,13 @@ void Graphics::iDraw() {
 	else if (letterType == "numbers"){
 		defaultWindow.showDefault();
 		showAllNumbers();
+	}
+	else if (letterType == "quiz"){
+		if (startQuiz == true){
+			quizWindow.showQuizWindow();
+			showQuiz(selected_quiz);
+		}
+		else quizWindow.showQuizButtons();
 	}
 	if (image != ""){
 		show(image.data());
@@ -79,17 +78,30 @@ void Graphics::iMouse(int button, int state, int mx, int my) {
 			}
 			else if (clickedButton == "main_menu"){
 				setCount = 0;
-				startQuiz = false;
+				quiz_window=startQuiz = false;
 				letterType = "";
 				image = "";
 			}
 			else if (clickedButton == "quiz_menu" && letterType == "" && !startQuiz){
+				quiz_window = true;
 				setCount = 0;
-				letterType = "";
+				letterType = "quiz";
 				image = "";
+				
+			}
+			else if (clickedButton == "number_quiz" && letterType=="quiz"){
 				startQuiz = true;
+				startNumberQuiz = true;
+				quizWindow.showQuizWindow();
 				generateQuiz();
 			}
+			else if (clickedButton == "letter_quiz" && letterType=="quiz"){
+				startQuiz = true;
+				startNumberQuiz = false;
+				quizWindow.showQuizWindow();
+				generateQuiz();
+			}
+
 			else if (clickedButton == "nextButton"){
 			if(!startQuiz){
 					setCount++;
@@ -176,7 +188,7 @@ int main()
 
 	freopen("letters\\vowels.txt", "r", stdin);
 	
-	for (i = 1; i <= 11; i++){
+	for (i = 1; i <= 12; i++){
 		string file;
 		cin >> startx >> starty >> endx >> endy >> file;
 		file = location + file;
@@ -193,7 +205,7 @@ int main()
 		consonants.push_back(temp);
 	}
 	freopen("quiz\\quiz.txt", "r", stdin);
-	for (i = 1; i <= 50; i++){
+	for (i = 1; i <= 59; i++){
 		scanf("%s", quizLetters[i]);
 	}
 	freopen("letters\\numbers.txt", "r", stdin);

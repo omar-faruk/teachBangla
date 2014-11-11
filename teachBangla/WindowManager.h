@@ -5,6 +5,8 @@
 #include "iGraphics.h"
 string myMainWindow = "icons\\main_background.bmp";
 string defaultBackground = "icons\\default.bmp";
+bool startQuiz = false;
+bool quiz_window = false,startNumberQuiz=false;
 
 class NewWindow
 	{
@@ -14,7 +16,9 @@ class NewWindow
 		int ex;
 		int ey;
 		char filename[150];
-		char *frame = "icons\\frame.bmp";
+		char quizBackground[150];
+		char QuizQuestion[150];
+		char frame[100] ;
 	public:
 		NewWindow();
 		NewWindow(int x, int y, int end_x, int end_y, const char *iconfile){
@@ -23,12 +27,24 @@ class NewWindow
 			ex = end_x;
 			ey = end_y;
 			strcpy(filename, iconfile);
+			strcpy(frame , "icons\\frame.bmp");
+			strcpy(quizBackground , "icons\\default.bmp");
+			strcpy(QuizQuestion, "icons\\question.bmp");
 		}
 		void showMain(){
 			Graphics::iShowBMP(sx, sy, filename);
 			closeButton.show();
 		}
-
+		void showQuizButtons(){
+			Graphics::iShowBMP(0, 0, filename);
+			mainMenu.show();
+			closeButton.show();
+			letterQuiz.show();
+			numberQuiz.show();
+		}
+		void showQuestion(){
+			Graphics::iShowBMP(810, 510, QuizQuestion);
+		}
 		void showDefault(){
 			Graphics::iShowBMP(sx, sy, filename);
 			Graphics::iShowBMP(110, 110, frame);
@@ -39,7 +55,7 @@ class NewWindow
 		}
 
 		void showQuizWindow(){
-			Graphics::iShowBMP(0, 0, filename);
+			Graphics::iShowBMP(0, 0, quizBackground);
 			Graphics::iShowBMP(800, 110, frame);
 			closeButton.show();
 			nextButton.show();
@@ -60,9 +76,15 @@ class NewWindow
 				return "vowels_menu";
 			}
 			else if (x >= learnConsonents.sx && x <= learnConsonents.ex && y >= learnConsonents.sy && y <= learnConsonents.ey){
-				return "consonant_menu";
+				if (quiz_window){
+					return "letter_quiz";
+				}
+				else return "consonant_menu";
 			}
 			else if (x >= learnNumbers.sx && x <= learnNumbers.ex && y >= learnNumbers.sy && y <= learnNumbers.ey){
+				if (quiz_window){
+					return "number_quiz";
+				}
 				return "numbers_menu";
 			}
 			else if (x >= mainMenu.sx && x <= mainMenu.ex && y >= mainMenu.sy && y <= mainMenu.ey){
@@ -76,17 +98,18 @@ class NewWindow
 	};
 	NewWindow mainWindow(1, 1, 1300, 700, myMainWindow.data());
 	NewWindow defaultWindow(1, 1, 1300, 700, defaultBackground.data());
-	NewWindow quizWindow(1, 1, 1300, 700, defaultBackground.data());
+	NewWindow quizWindow(1, 1, 1300, 700, myMainWindow.data());
 
 	static int quiz_ans;
-	static char quizLetters[55][100], selected_quiz[200];
-	static int mod = 50;
+	static char quizLetters[65][100], selected_quiz[200];
+	int mod;
 	static int quiz_options[5], used[150];
-	bool startQuiz = false;
 	void showQuizOptions(){
 
 		char quiz_set[5][100];
-		
+		if (startNumberQuiz){
+			quizWindow.showQuestion();
+		}
 		Graphics::iShowBMP(128, 120, quizLetters[quiz_options[1]]);
 		Graphics::iShowBMP(200, 120, quizLetters[quiz_options[2]]);
 		Graphics::iShowBMP(272, 120, quizLetters[quiz_options[3]]);
@@ -101,9 +124,20 @@ class NewWindow
 			quiz_ans = 4;
 		}
 		memset(used, 0, sizeof used);
+		if (startNumberQuiz==true){
+			mod = 10;
+		}
+		else mod = 50;
+
 		value = rand() % mod;
 		if (value == 0){
-			value = 50;
+			if (startNumberQuiz){
+				value = 59;
+			}
+			else value = 50;
+		}
+		if (startNumberQuiz){
+			value += 50;
 		}
 		used[value]++;
 		quiz_options[quiz_ans] = value;
@@ -111,22 +145,29 @@ class NewWindow
 		while (i <= 4)
 		{
 			if (i != quiz_ans){
-				while (used[value] != 0 && value != 0){
-					value = rand() % mod;
-					if (value == 0){
-						value = 50;
+			top:;
+			value = rand() % mod;
+				if (value == 0){
+					if (startNumberQuiz){
+						value = 9;
 					}
+					else value = 50;
 				}
+				if (startNumberQuiz){
+					value += 50;
+				}
+				if (used[value] != 0) goto top;
 				quiz_options[i] = value;
 				used[value]++;
 			}
 			i++;
 		}
-
-		cout << quiz_options[quiz_ans] << endl;
+		cout << used[quiz_options[1]]<<" ";
+		cout << used[quiz_options[2]] << " ";
+		cout << used[quiz_options[3]] << " "; 
+		cout << used[quiz_options[4]] << endl;
 		strcpy(selected_quiz, word[quiz_options[quiz_ans]][0].c_str());
-		puts(selected_quiz);
-
+		//puts(selected_quiz);
 		return;
 	}
 
@@ -157,13 +198,21 @@ class NewWindow
 
 	void  clickedQuizOption(int mx, int my){
 		if (isCorrect(mx, my)){
-			PlaySound("quiz\\right.wav", NULL, SND_FILENAME | SND_ASYNC);
-			Graphics::iDelay(2);
+			const char *imageOfLetter = word[quiz_options[quiz_ans]][0].data();
+			int len = strlen(imageOfLetter);
+			char soundOfLetter[100];
+			strcpy(soundOfLetter, imageOfLetter);
+			soundOfLetter[len - 1] = 'v';
+			soundOfLetter[len - 2] = 'a';
+			soundOfLetter[len - 3] = 'w';
+			puts(soundOfLetter);
+			PlaySound(soundOfLetter, NULL, SND_FILENAME | SND_ASYNC);
+			Graphics::iDelay(2.5);
 			generateQuiz();
 		}
 
 		else {
-			PlaySound("error", NULL, SND_FILENAME | SND_ASYNC);
+			PlaySound("quiz\\wrong.wav", NULL, SND_FILENAME | SND_ASYNC);
 		}
 		return;
 	}
